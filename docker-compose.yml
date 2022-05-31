@@ -1,0 +1,15 @@
+---
+version: '2.4'
+
+services:
+  enjoy_robotics_test_task:
+    image: enjoy_robotics_test_task
+    container_name: enjoy_robotics_test_task
+    build: .
+    environment:
+      - DISPLAY=${DISPLAY}
+    stdin_open: true
+    tty: true
+    stop_signal: SIGINT
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
