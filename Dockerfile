@@ -3,7 +3,7 @@ ARG WS=/opt/ros/overlay_ws
 
 
 # Install dependencies
-RUN apt update -y --fix-missing
+RUN apt update -y --fix-missing && apt upgrade -y
 RUN apt install -y build-essential cmake git
 RUN rosdep update
 
@@ -24,6 +24,9 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
 # Source entrypoint setup
 ENV WS $WS
 RUN sed --in-place --expression '$isource "$WS/install/setup.bash"' /ros_entrypoint.sh
+
+# Fix OpenGL version mismach error
+ENV LIBGL_ALWAYS_SOFTWARE=1
 
 # Run launch file
 CMD ros2 launch simulation_bringup bringup.launch.py
